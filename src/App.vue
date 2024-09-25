@@ -323,7 +323,7 @@
         </p>
         <div class="button">
           <p>Show all</p>
-          <img src="../src/assets/images/arrow2.svg" alt="arrow" />
+          <img src="../src/assets/images/Arrow2.svg" alt="arrow" />
         </div>
       </div>
 

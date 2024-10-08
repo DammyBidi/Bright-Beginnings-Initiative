@@ -331,7 +331,7 @@
 
       <div class="partner-section">
         <h1>Our Partners</h1>
-        <div class="partner-container">
+        <div class="partner-container"  ref="PartnerContainer">
           <div class="partner-image">
             <img
               src="../src/assets/images/ubongo_logo.png.svg"
@@ -361,7 +361,7 @@
             newsletter
           </h1>
           <div>
-            <input type="text" placeholder="name@gmail.com" />
+            <input type="email" placeholder="name@gmail.com" />
             <button>Subscribe</button>
           </div>
         </div>
@@ -392,7 +392,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
+
 
 const menuOpen = ref(false);
 
@@ -400,13 +401,38 @@ const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
 };
 
-watch(menuOpen, (newVal) => {
-  if (newVal) {
-    document.body.classList.add('menu-open')
-  } else {
-    document.body.classList.remove('menu-open')
+const PartnerContainer = ref<HTMLElement | null>(null);
+
+const startContinuousScrolling = (
+  container: HTMLElement,
+  direction: "left" 
+) => {
+  const scrollSpeed = 3;
+
+  const content = container.innerHTML;
+  container.innerHTML += content;
+
+  const scroll = () => {
+    if (direction === "left") {
+      container.scrollLeft += scrollSpeed;
+      if (container.scrollLeft >= container.scrollWidth / 2) {
+        container.scrollLeft = 0;
+      }
+    }
+
+    requestAnimationFrame(scroll);
+  };
+
+  scroll();
+};
+
+onMounted(() => {
+  if (PartnerContainer.value) {
+    startContinuousScrolling(PartnerContainer.value, "left");
   }
-})
+});
+
+
 </script>
 
 <style scoped>
